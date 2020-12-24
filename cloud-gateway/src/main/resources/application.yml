@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: server_1
+          predicates:
+            - Path=/cloud-fegin/**
+          filters:
+            - StripPrefix=1
+          uri: lb://cloud-fegin
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
